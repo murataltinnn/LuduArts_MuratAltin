@@ -16,7 +16,7 @@ namespace MuratAltin.Runtime.Interactables
             if (m_Data != null)
             {
                 InventoryController.Instance.AddItem(m_Data.ItemID);
-                gameObject.SetActive(false); // Objeyi sahneden kaldýr
+                gameObject.SetActive(false); 
             }
         }
     }

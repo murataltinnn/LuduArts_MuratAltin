@@ -6,7 +6,7 @@ namespace MuratAltin.Runtime.Player
 {
     public class InventoryController : MonoBehaviour
     {
-        public static InventoryController Instance; // Singleton: Kapý her yerden eriþebilsin
+        public static InventoryController Instance; 
 
         [SerializeField] private List<string> m_CollectedItemIDs = new List<string>();
 

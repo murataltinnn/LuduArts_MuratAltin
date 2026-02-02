@@ -25,16 +25,16 @@ namespace MuratAltin.Runtime.Interactables
             }
         }
 
-        public bool CanInteract => !m_ItemTaken; // Eþya alýnana kadar etkileþim sürsün
+        public bool CanInteract => !m_ItemTaken; 
 
-        // Sandýk açýlana kadar 4 saniye, açýldýktan sonra eþyayý almak için 0 saniye (anlýk)
+       
         public float InteractionDuration => m_IsOpened ? 0f : m_OpenDuration;
         #endregion
 
         private void Awake()
         {
             m_Animator = GetComponent<Animator>();
-            if (m_ItemInside != null) m_ItemInside.SetActive(false); // Baþta kapalý olsun
+            if (m_ItemInside != null) m_ItemInside.SetActive(false); 
         }
         public void Interact()
         {
@@ -49,7 +49,7 @@ namespace MuratAltin.Runtime.Interactables
             else if (!m_ItemTaken)
             {
                 m_ItemTaken = true;
-                if (m_ItemInside != null) m_ItemInside.SetActive(false); // Eþyayý "al" (gizle)
+                if (m_ItemInside != null) m_ItemInside.SetActive(false); 
             }
         }
     }

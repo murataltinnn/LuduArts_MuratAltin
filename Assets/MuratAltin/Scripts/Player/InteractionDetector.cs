@@ -40,7 +40,7 @@ namespace MuratAltin.Runtime.Player
                 return;
             }
 
-            // DURUM 1: Anlýk Etkileþim (Kapý, Iþýk vb.)
+            // DURUM 1: Anlýk Etkileþim 
             if (m_CurrentInteractable.InteractionDuration <= 0)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -59,7 +59,7 @@ namespace MuratAltin.Runtime.Player
                 if (m_ProgressSlider != null)
                 {
                     m_ProgressSlider.gameObject.SetActive(true);
-                    // Slider'ýn max deðerini 4 yaptýðýn için timer'ý direkt veriyoruz
+                    
                     m_ProgressSlider.value = m_HoldTimer;
                 }
 

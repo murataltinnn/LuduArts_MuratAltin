@@ -9,12 +9,12 @@ namespace MuratAltin.Runtime.Interactables
         private Animator m_Animator;
         [SerializeField] private bool m_IsOpen = false;
 
-        // Dependency Inversion: Somut sýnýfa deðil, soyut sýnýfa baðýmlýyýz.
+        
         private InteractionRequirement m_Requirement;
         #endregion
 
         #region Properties
-      //  public string InteractionTitle => "";
+      
         public string InteractionDescription => GetDescription();
         public bool CanInteract => true;
         public float InteractionDuration => 0f;
@@ -30,7 +30,7 @@ namespace MuratAltin.Runtime.Interactables
 
         public void Interact()
         {
-            // Eðer bir þart varsa ve saðlanmamýþsa etkileþimi reddet
+            
             if (m_Requirement != null && !m_Requirement.IsMet())
             {
                 Debug.Log(m_Requirement.GetWarningMessage());
@@ -44,9 +44,9 @@ namespace MuratAltin.Runtime.Interactables
         private string GetDescription()
         {
             if (m_Requirement != null && !m_Requirement.IsMet())
-                return "Locked - Key Required"; // Kilitli mesajý
+                return "Locked - Key Required";
 
-            return m_IsOpen ? "Press E to Close" : "Press E to Open"; // Açýk/Kapalý mesajlarý
+            return m_IsOpen ? "Press E to Close" : "Press E to Open"; 
         }
 
         private void SyncAnimator() => m_Animator.SetBool("m_IsOpen", m_IsOpen);

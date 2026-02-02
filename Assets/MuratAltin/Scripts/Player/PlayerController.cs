@@ -17,7 +17,7 @@ namespace MuratAltin.Runtime.Player
         private void Awake()
         {
             m_Controller = GetComponent<CharacterController>();
-            // Fareyi ekranýn ortasýna kilitle
+            
             Cursor.lockState = CursorLockMode.Locked;
         }
 

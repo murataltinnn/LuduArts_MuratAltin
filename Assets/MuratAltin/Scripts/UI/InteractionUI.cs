@@ -27,7 +27,7 @@ namespace MuratAltin.Runtime.UI
             if (interactable == null) return;
 
             m_PromptPanel.SetActive(true);
-            // Artýk sýnýflardan gelen InteractionDescription tam cümleyi içerecek
+            
             m_PromptText.text = interactable.InteractionDescription;
         }
 
