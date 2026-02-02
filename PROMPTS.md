@@ -1378,3 +1378,14 @@ Benim Promptum: İçinden ıtem cıkıyor onu da alsın istiyorum. Ve açıldık
 
 Açıklama: Chest sınıfı iki aşamalı etkileşimi (Açma ve Toplama) destekleyecek şekilde güncellendi. Dinamik InteractionDuration ve InteractionDescription mantığı kullanılarak kullanıcı deneyimi iyileştirildi.
 
+
+
+
+# Kullanılan Yazılım Mimarisi ve Design Patternler
+
+Proje geliştirilirken sürdürülebilir ve ölçeklenebilir bir yapı için aşağıdaki patternler uygulanmıştır:
+
+* **Singleton:** `InventoryController` ile merkezi veri yönetimi.
+* **Observer (via UnityEvents):** `Switch` sistemi ile nesneler arası gevşek bağlılık (Loose Coupling).
+* **Interface-Driven Design:** `IInteractable` ile polimorfik etkileşim yönetimi.
+* **SOLID Principles:** Özellikle *Single Responsibility* (Etkileşim ve Gereksinim ayrımı) ve *Open/Closed* (Yeni etkileşim türlerinin kod değiştirmeden eklenmesi) kuralları baz alınmıştır.
