@@ -8,23 +8,20 @@ namespace MuratAltin.Runtime.Interactables
         #region Fields
         [Header("Settings")]
         [SerializeField] private float m_OpenDuration = 3.0f;
-        [SerializeField] private GameObject m_ItemInside; // Sandýðýn içindeki eþya (Görseli)
+        [SerializeField] private GameObject m_ItemInside;
 
         private Animator m_Animator;
         private bool m_IsOpened = false;
         private bool m_ItemTaken = false;
         #endregion
-
         #region Properties
-        public string InteractionTitle => "Eski Sandýk";
-
         public string InteractionDescription
         {
             get
             {
-                if (!m_IsOpened) return "Açmak için Basýlý Tut";
-                if (!m_ItemTaken) return "Eþyayý Almak için ";
-                return "Boþ";
+                if (!m_IsOpened) return "To open the chest, press and hold the [E] key";
+                if (!m_ItemTaken) return "Press E to pick up the item";
+                return "Empty";
             }
         }
 
@@ -39,7 +36,6 @@ namespace MuratAltin.Runtime.Interactables
             m_Animator = GetComponent<Animator>();
             if (m_ItemInside != null) m_ItemInside.SetActive(false); // Baþta kapalý olsun
         }
-
         public void Interact()
         {
             // Durum 1: Sandýk henüz açýlmamýþsa
@@ -47,20 +43,13 @@ namespace MuratAltin.Runtime.Interactables
             {
                 m_IsOpened = true;
                 if (m_Animator != null) m_Animator.SetBool("m_IsOpen_Chest", true);
-
                 if (m_ItemInside != null) m_ItemInside.SetActive(true); // Eþyayý göster
-                Debug.Log("Sandýk açýldý, eþya göründü!");
             }
             // Durum 2: Sandýk açýk ama eþya henüz alýnmamýþsa
             else if (!m_ItemTaken)
             {
                 m_ItemTaken = true;
                 if (m_ItemInside != null) m_ItemInside.SetActive(false); // Eþyayý "al" (gizle)
-
-                // Buraya envanter ekleme kodunu yazabilirsin:
-                // InventoryController.Instance.AddItem("SandikItemi");
-
-                Debug.Log("Eþya sandýktan alýndý!");
             }
         }
     }

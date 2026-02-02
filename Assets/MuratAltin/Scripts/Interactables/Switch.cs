@@ -8,38 +8,21 @@ namespace MuratAltin.Runtime.Interactables
     {
         #region Fields
         [Header("Settings")]
-        [SerializeField] private string m_Title = "Þalter";
         [SerializeField] private UnityEvent m_OnActivated;
         [SerializeField] private bool m_IsOneTimeUse = false;
-
         [Header("State")]
-        [SerializeField] private bool m_IsOn = false; // Þalterin þu anki durumu
+        [SerializeField] private bool m_IsOn = false; 
         #endregion
-
         #region Properties
-        public string InteractionTitle => m_Title;
         public float InteractionDuration => 0f;
-
-        // Duruma göre yazýyý deðiþtiriyoruz
-        public string InteractionDescription => m_IsOn ? "Kapat" : "Çalýþtýr";
-
+        public string InteractionDescription => m_IsOn ? "Press [E] to turn off the light" : "Press [E] to turn on the light";
         public bool CanInteract => m_IsOneTimeUse ? !m_IsOn : true;
         #endregion
-       
-
         public void Interact()
         {
-            // Eðer tek kullanýmlýksa ve zaten açýlmýþsa iþlem yapma
             if (m_IsOneTimeUse && m_IsOn) return;
-
-            // Durumu tersine çevir (Toggle)
             m_IsOn = !m_IsOn;
-
-            // Baðlý olan her þeyi (Iþýðý, kapýyý vb.) tetikle
             m_OnActivated?.Invoke();
-
-            Debug.Log(m_IsOn ? "Þalter Açýldý" : "Þalter Kapatýldý");
         }
     }
-
 }

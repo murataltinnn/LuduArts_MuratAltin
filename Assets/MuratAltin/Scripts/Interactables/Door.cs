@@ -14,11 +14,11 @@ namespace MuratAltin.Runtime.Interactables
         #endregion
 
         #region Properties
-        public string InteractionTitle => "Kapý";
+      //  public string InteractionTitle => "";
         public string InteractionDescription => GetDescription();
         public bool CanInteract => true;
         public float InteractionDuration => 0f;
-
+       
         #endregion
 
         private void Awake()
@@ -44,9 +44,9 @@ namespace MuratAltin.Runtime.Interactables
         private string GetDescription()
         {
             if (m_Requirement != null && !m_Requirement.IsMet())
-                return m_Requirement.GetWarningMessage();
+                return "Locked - Key Required"; // Kilitli mesajý
 
-            return m_IsOpen ? "Kapat" : "Aç";
+            return m_IsOpen ? "Press E to Close" : "Press E to Open"; // Açýk/Kapalý mesajlarý
         }
 
         private void SyncAnimator() => m_Animator.SetBool("m_IsOpen", m_IsOpen);

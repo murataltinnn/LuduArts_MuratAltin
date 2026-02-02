@@ -16,7 +16,7 @@ namespace MuratAltin.Runtime.Core
 
         public override string GetWarningMessage()
         {
-            return "Anahtar Gerekli!";
+            return "";
         }
     }
 }

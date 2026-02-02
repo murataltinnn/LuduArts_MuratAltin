@@ -5,7 +5,6 @@ namespace MuratAltin.Runtime.Core
     public interface IInteractable
     {
         #region Properties
-        string InteractionTitle { get; }
         string InteractionDescription { get; }
         bool CanInteract { get; }
 
