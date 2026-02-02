@@ -18,6 +18,7 @@ namespace MuratAltin.Runtime.Interactables
 
         #region Properties
         public string InteractionTitle => m_Title;
+        public float InteractionDuration => 0f;
 
         // Duruma göre yazýyý deðiþtiriyoruz
         public string InteractionDescription => m_IsOn ? "Kapat" : "Çalýþtýr";

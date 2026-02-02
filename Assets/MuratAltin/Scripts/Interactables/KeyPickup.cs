@@ -16,7 +16,8 @@ namespace MuratAltin.Runtime.Interactables
         public string InteractionDescription => "Topla";
 
         public bool CanInteract => true;
-       
+        public float InteractionDuration => 0f;
+
 
         public void Interact()
         {

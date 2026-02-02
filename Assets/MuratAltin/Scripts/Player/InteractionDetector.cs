@@ -1,76 +1,110 @@
 using MuratAltin.Runtime.Core;
 using MuratAltin.Runtime.UI;
 using UnityEngine;
-// Slider kütüphanesini sildik çünkü artýk süre bazlý etkileþim yok
+using UnityEngine.UI;
 
 namespace MuratAltin.Runtime.Player
 {
-    /// <summary>
-    /// Oyuncunun baktýðý nesneleri tespit eder ve etkileþimi yönetir.
-    /// Sadece anlýk (E'ye bas-çalýþtýr) etkileþimleri destekler.
-    /// </summary>
     public class InteractionDetector : MonoBehaviour
     {
         #region Fields
-
         [Header("Settings")]
         [SerializeField] private float m_InteractionRange = 5f;
         [SerializeField] private LayerMask m_InteractableLayer;
         [SerializeField] private Transform m_CameraTransform;
-
-        [Header("References")]
         [SerializeField] private InteractionUI m_InteractionUI;
 
-        private IInteractable m_CurrentInteractable;
+        [Header("Hold Settings")]
+        [SerializeField] private Slider m_ProgressSlider;
 
+        private IInteractable m_CurrentInteractable;
+        private float m_HoldTimer = 0f;
         #endregion
 
-        #region Unity Methods
+        private void Start()
+        {
+            if (m_ProgressSlider != null) m_ProgressSlider.gameObject.SetActive(false);
+        }
 
         private void Update()
         {
             DetectInteractable();
+            HandleInteractionInput();
+        }
 
-            // Etkileþim kontrolü: Sadece GetKeyDown (Anlýk basýþ) kullanýyoruz
-            if (Input.GetKeyDown(KeyCode.E) && m_CurrentInteractable != null)
+        private void HandleInteractionInput()
+        {
+            if (m_CurrentInteractable == null || !m_CurrentInteractable.CanInteract)
             {
-                if (m_CurrentInteractable.CanInteract)
+                ResetHold();
+                return;
+            }
+
+            // DURUM 1: Anlýk Etkileþim (Kapý, Iþýk vb.)
+            if (m_CurrentInteractable.InteractionDuration <= 0)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     m_CurrentInteractable.Interact();
-
-                    // Etkileþim sonrasý metni güncelle (Örn: "Aç" -> "Kapat")
                     m_InteractionUI.Show(m_CurrentInteractable);
                 }
+                return;
+            }
+
+            // DURUM 2: Basýlý Tutma (Sandýk vb.)
+            if (Input.GetKey(KeyCode.E))
+            {
+                m_HoldTimer += Time.deltaTime;
+
+                if (m_ProgressSlider != null)
+                {
+                    m_ProgressSlider.gameObject.SetActive(true);
+                    // Slider'ýn max deðerini 4 yaptýðýn için timer'ý direkt veriyoruz
+                    m_ProgressSlider.value = m_HoldTimer;
+                }
+
+                if (m_HoldTimer >= m_CurrentInteractable.InteractionDuration)
+                {
+                    m_CurrentInteractable.Interact();
+                    m_InteractionUI.Show(m_CurrentInteractable);
+                    ResetHold();
+                }
+            }
+            else
+            {
+                ResetHold();
             }
         }
 
-        #endregion
+        private void ResetHold()
+        {
+            m_HoldTimer = 0f;
+            if (m_ProgressSlider != null)
+            {
+                m_ProgressSlider.value = 0;
+                m_ProgressSlider.gameObject.SetActive(false);
+            }
+        }
 
-        #region Methods
-
-        /// <summary>
-        /// Raycast ile bakýlan objeyi bulur ve UI'ý tetikler.
-        /// </summary>
         private void DetectInteractable()
         {
             Ray ray = new Ray(m_CameraTransform.position, m_CameraTransform.forward);
-
             if (Physics.Raycast(ray, out RaycastHit hit, m_InteractionRange, m_InteractableLayer))
             {
-                // Root veya child objede IInteractable ara
                 if (hit.collider.transform.root.TryGetComponent(out IInteractable interactable))
                 {
-                    m_CurrentInteractable = interactable;
-                    m_InteractionUI.Show(m_CurrentInteractable);
+                    if (m_CurrentInteractable != interactable)
+                    {
+                        m_CurrentInteractable = interactable;
+                        m_InteractionUI.Show(m_CurrentInteractable);
+                    }
                     return;
                 }
             }
 
-            // Menzilden çýkýnca her þeyi sýfýrla
             m_CurrentInteractable = null;
             m_InteractionUI.Hide();
+            ResetHold();
         }
-
-        #endregion
     }
 }

@@ -17,7 +17,8 @@ namespace MuratAltin.Runtime.Interactables
         public string InteractionTitle => "Kapý";
         public string InteractionDescription => GetDescription();
         public bool CanInteract => true;
-       
+        public float InteractionDuration => 0f;
+
         #endregion
 
         private void Awake()
